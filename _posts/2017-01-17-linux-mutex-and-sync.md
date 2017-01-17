@@ -10,6 +10,7 @@ title: linux-mutex-and-sync
 **举个栗子**：
 1个生产者、1个消费者的生产者消费者模型，这里生产者消费者之间要进行同步。
 1个生产者，N个消费者的生产者消费者模型，这N个消费者之间要进行互斥。
+
 ## Linux内核中的同步互斥机制
 **内核也需要支持互斥、同步：**现在计算机大多数是多处理器或者多核处理器，运行在不同处理器/核上的内核代码可能在同一时刻里面并发访问同一个共享数据。Linux内核现在是抢占式内核，调度器可以在任何时刻抢占正在运行的内核代码。
 介绍抢占式内核的文章[Linux内核态抢占机制分析  ](http://mengren425.blog.163.com/blog/static/5690393120151625743841/)
@@ -40,6 +41,7 @@ title: linux-mutex-and-sync
 4. 文件锁，记录锁： flock , fcntl [参考](http://blog.jobbole.com/104331/)
 5. Posix 信号量：sem_open sem_close sem_wait, sem_post
 6. SystemV信号量：semget semop semctl
+
 ## Linux 系统 的进程间通信机制
 1. 管道pipe ,fifo
 2. Posix消息队列：mg_open, mg_close ,mg_unlink, mg_send, mg_receive。 有同步的作用，可以用于生产者消费者模型
