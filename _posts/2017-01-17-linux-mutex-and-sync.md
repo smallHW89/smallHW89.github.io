@@ -1,6 +1,6 @@
 ---
 layout: post
-title: linux-mutex-and-sync
+title: Linux中的同步互斥
 ---
 
 ## 互斥与同步的概念
