@@ -1,7 +1,6 @@
 ---
 layout: post
-date:2017-01-17
-title: "linux上的同步与互斥"
+title: linux-mutex-and-sync
 ---
 
 #互斥与同步的概念
