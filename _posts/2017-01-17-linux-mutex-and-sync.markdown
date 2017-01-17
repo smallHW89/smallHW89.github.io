@@ -1,6 +1,6 @@
 ---
 layout: post
-date:2016-01-17
+date:2016-01-17 23:33:08 +0800
 title: "linux_mutex_and_sync"
 categories: jekyll update
 ---
