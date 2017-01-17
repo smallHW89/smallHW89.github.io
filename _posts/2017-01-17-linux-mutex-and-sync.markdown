@@ -2,6 +2,7 @@
 layout: post
 date:2016-01-17
 title: "linux_mutex_and_sync"
+categories: jekyll update
 ---
 
 #互斥与同步的概念
