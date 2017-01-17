@@ -1,5 +1,4 @@
 ---
-layout:page
 title:  "linux mutex and sync"
 date:   2017-01-17 23:33:08 +0800
 categories: jekyll update
