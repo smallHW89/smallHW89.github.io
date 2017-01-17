@@ -1,5 +1,5 @@
 ---
-date:
+date:2016-01-17
 status: draft
 title: linux上的同步与互斥
 ---
