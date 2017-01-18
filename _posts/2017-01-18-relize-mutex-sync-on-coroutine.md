@@ -1,6 +1,6 @@
 ---
 date: 2017-01-18 16:23
-status: public
+layout:post
 title: 2017-01-18-relize-mutex-sync-on-coroutine
 ---
 
