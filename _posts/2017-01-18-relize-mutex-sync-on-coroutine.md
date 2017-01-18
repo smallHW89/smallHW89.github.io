@@ -57,6 +57,26 @@ A Computer is a state machine. Threads are for people who can't program state ma
 
 ###  信号量：
 
+···
+/**
+ *@brief 微线程的信号量 , 用于微线程间的同步
+ */
+class MtSem
+{
+    public:
+        uint32_t  sem_seq( )
+        {
+            return _dwSemSeq;
+        };
+        friend  class MtFrame;
+     private: 
+        uint32_t  _dwSemSeq;     //信号量资源的唯一标识, Init时调度器分配
+        int32_t  _dwSemInitValue;   //信号量的初始值，参考sem_init的第三个参数  
+        int32_t  _dwSemCurValue;
+        std::list<MicroThread *> _waitList;   //当资源消耗完时的 等待队列
+};
+···
+
 ###  互斥量：
 
 ###  条件变量：  
