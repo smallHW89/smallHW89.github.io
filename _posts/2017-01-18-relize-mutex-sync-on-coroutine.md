@@ -1,5 +1,5 @@
 ---
-layout:post
+layout: post
 title: 2017-01-18-relize-mutex-sync-on-coroutine
 ---
 
