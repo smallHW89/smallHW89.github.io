@@ -57,7 +57,7 @@ A Computer is a state machine. Threads are for people who can't program state ma
 
 ###  信号量：
 
-···
+```
 /**
  *@brief 微线程的信号量 , 用于微线程间的同步
  */
@@ -75,7 +75,97 @@ class MtSem
         int32_t  _dwSemCurValue;
         std::list<MicroThread *> _waitList;   //当资源消耗完时的 等待队列
 };
-···
+
+int  MtFrame::SemInit(uint32_t  value )
+{
+    uint32_t seq = _nextSemSeq+1;
+    _nextSemSeq++;
+    if(seq == 0 )
+    {
+        seq++;
+        _nextSemSeq++;
+    }
+    if(  _semMng.find(seq) != _semMng.end ()) 
+    {
+        MTLOG_ERROR("Init Sem Error  %d", errno);
+        return 0; //资源消耗完
+    }
+    MtSem * sem = new MtSem;
+    sem->_dwSemSeq = seq;
+    sem->_dwSemInitValue = sem->_dwSemCurValue = value;
+    _semMng[seq] = sem;
+    return seq;
+}
+
+int MtFrame::SemWait(uint32_t semSeq  )
+{ //等待
+    if( _semMng.find(semSeq) == _semMng.end() )
+    {
+        MTLOG_ERROR("semSeq  %d not in semMng",semSeq);
+        return -1;
+    }
+    MtSem * sem = _semMng[semSeq];
+    if(sem == NULL )
+    {
+        MTLOG_ERROR("MtSem:%d is NULL ", semSeq);
+        return -1;
+    }
+
+    if( sem->_dwSemCurValue <= 0 ) 
+    {//挂住线程 
+       MtFrame* mtframe = MtFrame::Instance();
+       MicroThread* thread =mtframe->GetActiveThread();
+        sem->_waitList.push_back(thread); 
+        thread->sleep(0x7fffffff); //睡眠最大时间, 切走线程
+        sem->_dwSemCurValue--; //且回来时肯定是_dwSemCurValue 已经>0了
+    }
+    else // _dwSemCurValue > 0
+    {
+        sem->_dwSemCurValue --;
+    }
+    return 0;
+}
+int MtFrame::SemPost(uint32_t semSeq )
+{
+    if( _semMng.find(semSeq) == _semMng.end() )
+    {
+        MTLOG_ERROR("semSeq  %d not in semMng",semSeq);
+        return -1;
+    }
+
+    MtSem * sem = _semMng[semSeq];
+    if(sem == NULL )
+    {
+        MTLOG_ERROR("MtSem:%d is NULL ", semSeq);
+        return -1;
+    }
+
+    if(sem->_dwSemCurValue > 0 )
+    { //没有线程挂住
+       sem->_dwSemCurValue++;
+    }
+
+    else
+    { //_dwSemCurValue <=0. 应该只能==0，不会小于0
+      //有线程挂住，唤醒,唤醒几个呢？每次唤醒一个即可。因为也只增加了1个
+       
+        sem->_dwSemCurValue++; 
+        if( sem->_waitList.size()> 0 )
+        { //找到队列头部的线程，头部的先压入的，所以先唤醒
+            MicroThread *thread = sem->_waitList.front();
+            sem->_waitList.pop_front(); //从等待队列头删除
+            //从调度器的睡眠列迁移到可运行队列
+            RemoveSleep(thread);
+            InsertRunable(thread);
+        }
+        else
+        { //never run here
+        }
+    }
+    return 0;
+}
+
+```
 
 ###  互斥量：
 
