@@ -4,7 +4,7 @@ status: public
 title: 谈谈key-value 存储-1
 ---
 
-#序言
+# 序言
 很多技术文章提到互联网业务的分层架构时，都会提到 
 1、接入层
 2、逻辑层
@@ -17,7 +17,7 @@ title: 谈谈key-value 存储-1
 场景2：某视频网站，前端要查询某个演员的所有影片，或者2017年上映的所有有影片。这里用 key-value存储就不一定可以了；可以用sql关系数据库，当然可以中间增加key-value缓存，比如memcache; 或者用elasticsearch这个开源的搜索服务器。
 场景3：微信朋友圈中 某个用户发表的状态，应该如何存储？
 场景4：QQ空间，微信朋友圈中用户发表的图片，使用什么存储？
-##几个常见的开源key-value存储系统
+## 几个常见的开源key-value存储系统
 1、redis： 
 key-value, value支持string, set, dict, list,  有序set
 2、memcached
@@ -26,7 +26,7 @@ key-value , value只是一段buffer
 key-value, value是一段buffer .一个key-value存储引擎，不包含网络处理的功能
 4、rocksdb
 facebook 基于rocksdb 开发的。
-##key-value存储系统设计需要考虑的几个方面
+# #key-value存储系统设计需要考虑的几个方面
 1、机器存储介质的组织管理，通常是内存，磁盘文件等，也可以称为存储引擎。
 2、提供的接口, 比如memcached, leveldb接口比较简单，只能set get一个value(buffer), redis的接口比较丰富。
 3、集群分布管理，如何sharding, 如何扩缩容， 数据的路由分布
@@ -35,7 +35,7 @@ facebook 基于rocksdb 开发的。
 6、读写性能
 7、网络部分，进程线程模型
 
-##谈谈key-value 存储系统的存储模型，存储管理
+## 谈谈key-value 存储系统的存储模型，存储管理
 一般计算机的存储介质：
 1、寄存器
 2、L1,L2 cache
