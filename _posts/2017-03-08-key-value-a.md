@@ -73,6 +73,13 @@ facebook 基于rocksdb 开发的。
 |部分内存中，部分存储在SSD或者机械硬盘| 机械硬盘（内存，SSD中部分缓存，或者做冷热数据分层） | 成本低 ，实现复杂 |
 
 
+| 左对齐 | 居中  | 右对齐 |
+| :------------ |:---------------:| -----:|
+| col 3 is      | some wordy text | $1600 |
+| col 2 is      | centered        |   $12 |
+| zebra stripes | are neat        |    $1 |
+
+
 
 
 
